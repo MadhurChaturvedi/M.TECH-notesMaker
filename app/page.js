@@ -8,11 +8,23 @@ export default function HomePage() {
   const [form, setForm] = useState({ title: '', content: '' });
   const fileRef = useRef(null);
 
-  async function fetchPosts() {
+ async function fetchPosts() {
+  try {
     const res = await fetch('/api/posts', { cache: 'no-store' });
+
+    if (!res.ok) {
+      const errorText = await res.text(); // read the error HTML/text
+      console.error("API Error:", errorText);
+      return;
+    }
+
     const data = await res.json();
     setPosts(data.posts || []);
+  } catch (err) {
+    console.error("Failed to fetch posts:", err);
   }
+}
+
 
   useEffect(() => {
     fetchPosts();
