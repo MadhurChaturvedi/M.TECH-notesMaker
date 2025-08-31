@@ -1,0 +1,1 @@
+Static files go here. Images you upload will be saved to /public/uploads.
